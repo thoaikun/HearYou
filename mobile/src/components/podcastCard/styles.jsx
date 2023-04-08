@@ -3,10 +3,15 @@ const maxWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     container: {
+        flexDirection: 'column',
+        width: '100%',
+        paddingHorizontal: maxWidth * 0.07,
+        paddingTop: 20,
+    },
+    header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '85%',
     },
     infoContainer: {
         flexDirection: 'row',
@@ -24,8 +29,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     description: {
-        fontSize: 18,
+        marginTop: 15,
+        fontSize: 15,
         color: '#8F8B8B',
+        textAlign: 'justify',
+        lineHeight: 20,
+    },
+    bar: {
+        marginTop: 20,
+        height: 2,
+        backgroundColor: '#F1EEEE',
     },
 })
 
