@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     logo: {
         marginTop: 20,
     },
+    inputContainer: {
+        marginTop: 20,
+    },
 })
 
-export default styles;
+export default styles

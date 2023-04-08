@@ -1,8 +1,9 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import React, { useEffect } from 'react'
+import { Provider } from './src/context/Context'
+import { checkAuth } from './src/firebase/auth'
 import TabNavigator from './src/navigation/navigation'
 import LoginScreen from './src/screens/LoginScreen'
-import { checkAuth } from './src/firebase/auth'
 
 const LightTheme = {
     dark: false,
@@ -20,7 +21,7 @@ export default function App() {
     }, [])
 
     return (
-        <>
+        <Provider>
             {login ? (
                 <NavigationContainer theme={LightTheme}>
                     <TabNavigator />
@@ -28,6 +29,6 @@ export default function App() {
             ) : (
                 <LoginScreen />
             )}
-        </>
+        </Provider>
     )
 }

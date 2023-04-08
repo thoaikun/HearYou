@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native'
 import Navbar from '../components/navbar/Navbar'
+import Context from '../context/Context'
 import HomeScreen from '../screens/HomeScreen'
 import LoginScreen from '../screens/LoginScreen'
 import MusicPlayer from '../screens/MusicPlayer'
@@ -30,14 +31,19 @@ const HomeStackCmp = () => {
 }
 
 const AddStackCmp = () => {
+    const { role } = useContext(Context)
+
     return (
         <Add.Navigator
             screenOptions={{
                 headerShown: false,
             }}
         >
-            <Add.Screen name='Add post' component={QuestionForm} />
-            <Add.Screen name='Upload' component={UploadEpisodeScreen} />
+            {role === 'viewer' ? (
+                <Add.Screen name='Add post' component={QuestionForm} />
+            ) : (
+                <Add.Screen name='Upload' component={UploadEpisodeScreen} />
+            )}
         </Add.Navigator>
     )
 }
