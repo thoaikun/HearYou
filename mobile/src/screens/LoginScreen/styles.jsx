@@ -1,26 +1,24 @@
-import { Dimensions, StyleSheet } from 'react-native'
-const maxWidth = Dimensions.get('window').width
-const maxHeight = Dimensions.get('window').height
-
+import { Dimensions, StyleSheet } from 'react-native';
+var maxWidth = Dimensions.get('window').width;
+var maxHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        marginTop: maxWidth * 0.25,
-    },
-    image: {
-        marginLeft: maxHeight * 0.03,
-    },
-    logo: {
-        marginLeft: maxHeight * 0.03,
-        marginVertical: 30,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-})
+  container: {
+    // flex: 1,
+    height: maxHeight,
+    display: 'flex',
+    paddingVertical: 50,
+    paddingHorizontal: 40,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  info: {
+    flex: 1,
+    aspectRatio: 287 / 441,
+    resizeMode: 'contain',
+  },
+  logo: {
+    marginTop: 20,
+  },
+});
 
-export default styles
+export default styles;
