@@ -5,15 +5,21 @@ import styles from './styles'
 
 const LoginScreen = () => {
     return (
-        <View style={styles.container}>
-            <View style={styles.image}>
-                <Image source={require('../../../assets/infographic.png')} />
+        <>
+            <View style={styles.container}>
+                <View style={styles.image}>
+                    <Image
+                        source={require('../../../assets/infographic.png')}
+                    />
+                </View>
+                <View style={styles.logo}>
+                    <Image source={require('../../../assets/logo.png')} />
+                </View>
             </View>
-            <View style={styles.logo}>
-                <Image source={require('../../../assets/logo.png')} />
+            <View style={styles.buttonContainer}>
+                <Button content='Login'></Button>
             </View>
-            <Button content='Login'></Button>
-        </View>
+        </>
     )
 }
 
