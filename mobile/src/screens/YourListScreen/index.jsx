@@ -6,7 +6,7 @@ import Back from '../../../assets/svg/back_icon.svg'
 import { Dimensions } from 'react-native';
 import { IconButton } from '@react-native-material/core';
 import Context from '../../context/Context';
-import { getQuestionByUserID } from '../../firebase/firestore';
+import { getQuestionByPodcastID, getQuestionByUserID } from '../../firebase/firestore';
 import { useNavigation } from '@react-navigation/core';
 
 const YourListScreen = () => {
@@ -17,7 +17,7 @@ const YourListScreen = () => {
 
   React.useEffect(() => {
     const handle = async () => {
-      const res = await getQuestionByUserID(uid)
+      const res = role === 'viewer' ? await getQuestionByUserID(uid) : await getQuestionByPodcastID(uid)
       setQuestions(res)
     }
 
@@ -32,7 +32,7 @@ const YourListScreen = () => {
       </View>
       <View style={{ width: maxWidth, paddingHorizontal: 20 }}>
         {questions.map((item, index) =>
-          <Question key={item.questionID} title={`Question #${index + 1}`} description={item.description} />
+          <Question key={item.questionID} title={`Question #${index + 1}`} description={item.description} role={role} />
         )}
       </View>
     </View>

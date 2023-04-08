@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import styles from './styles';
 
-export default function Question({ title, description }) {
+export default function Question({ title, description, role }) {
     const [pressed, setPressed] = React.useState(false)
 
     return <View style={styles.container}>
@@ -19,7 +19,7 @@ export default function Question({ title, description }) {
                 onPressIn={() => setPressed(true)}
                 onPressOut={() => setPressed(false)}
             >
-                <Text style={styles.content}>Go to your answer</Text>
+                <Text style={styles.content}>{role === 'viewer' ? 'Go to your answer' : 'Answer'}</Text>
             </Pressable>
         </View>
     </View>
