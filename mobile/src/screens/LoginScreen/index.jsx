@@ -19,7 +19,7 @@ const LoginScreen = () => {
       </View>
       <View>
         <TextInput
-          placeholder="Username"
+          placeholder="Email"
           value={username}
           onChangeText={() => setUsername(username)}
           style={{
