@@ -1,9 +1,9 @@
 // TODO: firestore helper functions
 // @ts-check
 
-import { firestore } from './config'
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
+import { firestore } from './config';
 
 // Users
 
@@ -24,6 +24,12 @@ export const addNewUser = async (payload) => {
 }
 
 // Podcast
+
+export const getPodcastByUser = async (uid) => {
+    const q = query(collection(firestore, "podcasts"), where("ownerID", "==", uid))
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs[0].data();
+}
 
 export const getPodcastData = async (pid) => {
     const docSnap = await getDoc(doc(firestore, "podcasts", pid))
@@ -137,4 +143,14 @@ export const addNewQuestion = async (payload) => {
         description: payload.description,
         episodeID: payload.episodeID
     })
+}
+
+export const getUnansweredQuestions = async (pid) => {
+    const q = query(collection(firestore, "questions"), where("episodeID", "==", null), where("podcastID", "==", pid))
+    const querySnapshot = await getDocs(q)
+    const listQuestions = []
+    querySnapshot.forEach((doc) => {
+        listQuestions.push(doc.data())
+    })
+    return listQuestions
 }
