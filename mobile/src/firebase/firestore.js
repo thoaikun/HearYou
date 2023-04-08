@@ -1,7 +1,7 @@
 // TODO: firestore helper functions
 // @ts-check
 
-import { firestore } from '../config/firebase'
+import { firestore } from './config'
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 
