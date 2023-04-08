@@ -1,4 +1,3 @@
-import { async } from '@firebase/util'
 import * as React from 'react'
 import { Image, ScrollView, TextInput, View } from 'react-native'
 import InoGraphic from '../../../assets/svg/inographic.svg'
@@ -11,7 +10,7 @@ import styles from './styles'
 const LoginScreen = () => {
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
-    const { setName, setRole } = React.useContext(Context)
+    const { setName, setRole, setUid } = React.useContext(Context)
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -63,6 +62,7 @@ const LoginScreen = () => {
                         console.log(res)
                         setName(res.name)
                         setRole(res.role)
+                        setUid(res.userID)
                     }
                 }}
             />

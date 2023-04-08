@@ -12,12 +12,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        gap: 10
     },
     infoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 20,
+        flex: 1
     },
     image: {
         width: 70,
@@ -25,8 +27,9 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     title: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
+        flex: 1
     },
     description: {
         marginTop: 15,

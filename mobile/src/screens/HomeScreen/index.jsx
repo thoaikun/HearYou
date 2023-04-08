@@ -1,30 +1,53 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import BellIcon from '../../../assets/svg/bell_icon.svg'
 import PodcastCard from '../../components/podcastCard/PodcastCard'
 import TopTab from '../../components/tab/Tab'
 import styles from './styles'
+import { getNewestEpisode, getTrendingEpisode } from '../../firebase/firestore'
 
 const Tab = createMaterialTopTabNavigator()
 
 const Trending = () => {
+    const [listEpisodes, setListEpisodes] = useState([])
+
+    useEffect(() => {
+        const handle = async () => {
+            const res = await getTrendingEpisode()
+            setListEpisodes(res)
+        }
+
+        handle()
+    }, [])
+
     return (
         <ScrollView>
-            <PodcastCard></PodcastCard>
-            <PodcastCard></PodcastCard>
-            <PodcastCard></PodcastCard>
-            <PodcastCard></PodcastCard>
-            <PodcastCard></PodcastCard>
+            {listEpisodes.map((item) =>
+                <PodcastCard key={item.episodeID} item={item}> </PodcastCard>
+            )}
         </ScrollView>
     )
 }
 
 const Newest = () => {
+    const [listEpisodes, setListEpisodes] = useState([])
+
+    useEffect(() => {
+        const handle = async () => {
+            const res = await getNewestEpisode()
+            setListEpisodes(res)
+        }
+
+        handle()
+    }, [])
+
     return (
         <View>
-            <Text>Newest</Text>
+            {listEpisodes.map((item) =>
+                <PodcastCard key={item.episodeID} item={item}> </PodcastCard>
+            )}
         </View>
     )
 }

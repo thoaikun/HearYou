@@ -120,6 +120,16 @@ export const getQuestion = async (qid) => {
         return null
 }
 
+export const getQuestionByUserID = async (uid) => {
+    const q = query(collection(firestore, "questions"), where("userID", "==", uid), limit(10))
+    const querySnapshot = await getDocs(q)
+    const listEpisodes = []
+    querySnapshot.forEach((doc) => {
+        listEpisodes.push(doc.data())
+    })
+    return listEpisodes
+}
+
 export const addNewQuestion = async (payload) => {
     const quesID = uuidv4()
     await setDoc(doc(firestore, "questions", quesID), {
