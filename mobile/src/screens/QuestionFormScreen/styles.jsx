@@ -16,17 +16,6 @@ export default StyleSheet.create({
     container: {
         paddingHorizontal: 38,
     },
-    input: {
-        minHeight: 350,
-        borderWidth: 2,
-        borderColor: "#A2A9B8",
-        paddingHorizontal: 29,
-        paddingVertical: 34,
-        textAlignVertical: "top",
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        marginBottom: 40,
-    },
     button: {
         backgroundColor: "#E070C8",
         paddingVertical: 15,
