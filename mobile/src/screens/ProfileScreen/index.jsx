@@ -6,6 +6,7 @@ import Bell from '../../../assets/svg/bell_icon.svg'
 import Logout from '../../../assets/svg/logout.svg'
 import Back from '../../../assets/svg/back_icon_reverse.svg'
 import { Avatar, IconButton } from "@react-native-material/core";
+import { logout } from "../../firebase/auth";
 
 export default ProfileScreen = () => {
     const maxWidth = Dimensions.get('window').width
@@ -22,7 +23,7 @@ export default ProfileScreen = () => {
                     <Avatar size={80} image={require('../../../assets/thumbnail.png')} />
                     <Text style={{ marginLeft: 20, fontSize: 20, fontWeight: 'bold' }}>Username</Text>
                 </View>
-                <IconButton icon={<Logout />} />
+                <IconButton icon={<Logout />} onPress={() => logout()} />
             </View>
             <Pressable
                 style={[styles.btn, pressed ? styles.pressed : null]}

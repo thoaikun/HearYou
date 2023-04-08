@@ -4,13 +4,12 @@ import InoGraphic from '../../../assets/svg/inographic.svg';
 import Logo from '../../../assets/svg/logo.svg';
 import Button from '../../components/button/Button';
 import styles from './styles';
+import { signin } from '../../firebase/auth';
 
 const LoginScreen = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const handleSubmit = () => {
-    addNewUser(username, password);
-  };
+
   return (
     <View style={styles.container}>
       <InoGraphic height={200} />
@@ -21,7 +20,7 @@ const LoginScreen = () => {
         <TextInput
           placeholder="Email"
           value={username}
-          onChangeText={() => setUsername(username)}
+          onChangeText={(e) => setUsername(e)}
           style={{
             height: 40,
             margin: 12,
@@ -33,7 +32,7 @@ const LoginScreen = () => {
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={() => setPassword(password)}
+          onChangeText={(e) => setPassword(e)}
           secureTextEntry={true}
           style={{
             height: 40,
@@ -47,7 +46,7 @@ const LoginScreen = () => {
       <Button
         content="Log In"
         style={{ marginTop: 50, paddingVertical: 10 }}
-        onPress={() => handleSubmit()}
+        onPress={() => signin({email: username, password: password})}
       />
     </View>
   );
