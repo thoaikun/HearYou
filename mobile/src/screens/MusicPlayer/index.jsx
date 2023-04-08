@@ -2,10 +2,9 @@ import Slider from '@react-native-community/slider'
 import * as React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import PlayActive from '../../../assets/svg/play_active.svg'
-import PlayInActive from '../../../assets/svg/play_inactive.svg'
 import NextIcon from '../../../assets/svg/skip-to-next.svg'
 import PrevIcon from '../../../assets/svg/skip-to-previous.svg'
-import Title from '../../components/title/Title'
+import Title from '../../components/Title/Title.jsx'
 import styles from './styles'
 
 const MusicPlayer = () => {
