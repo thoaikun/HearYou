@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
-import LoginScreen from './src/screens/LoginScreen/index';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import LoginScreen from './src/screens/LoginScreen/index'
 export default function App() {
-  return (
-    <View>
-      <LoginScreen />
-    </View>
-  );
+    return (
+        <SafeAreaView>
+            <LoginScreen />
+        </SafeAreaView>
+    )
 }
