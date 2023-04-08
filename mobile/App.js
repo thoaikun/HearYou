@@ -1,14 +1,28 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import ListCard from './src/components/listCard/ListCard';
-import PodcastCard from './src/components/podcastCard/PodcastCard';
-import TabNavigator from './src/navigation/navigation';
-import LoginScreen from './src/screens/LoginScreen/index';
-// import MusicPlayer from './src/screens/MusicPlayer/index';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
+import React from 'react'
+import TabNavigator from './src/navigation/navigation'
+import LoginScreen from './src/screens/LoginScreen'
+
+const LightTheme = {
+    dark: false,
+    colors: {
+        ...DefaultTheme.colors,
+        background: 'white',
+    },
+}
+
 export default function App() {
-  return (
-    <View>
-      <LoginScreen />
-    </View>
-  );
+    const [login, setLogin] = React.useState(true)
+
+    return (
+        <>
+            {login ? (
+                <NavigationContainer theme={LightTheme}>
+                    <TabNavigator />
+                </NavigationContainer>
+            ) : (
+                <LoginScreen />
+            )}
+        </>
+    )
 }

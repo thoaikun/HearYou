@@ -1,15 +1,9 @@
-import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import AddIcon from '../../../assets/svg/add.svg'
-import HomeActiveIcon from '../../../assets/svg/home_active.svg'
-import HomeInactiveIcon from '../../../assets/svg/home_inactive.svg'
-import ProfileActiveIcon from '../../../assets/svg/profile_active.svg'
-import ProfileInactiveIcon from '../../../assets/svg/profile_inactive.svg'
+import { Animated, TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 
-const Navbar = ({ state, descriptors, navigation }) => {
+function TopTab({ state, descriptors, navigation, position }) {
     return (
-        <View style={[styles.background]}>
+        <View style={styles.container}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key]
                 const label =
@@ -41,30 +35,33 @@ const Navbar = ({ state, descriptors, navigation }) => {
                     })
                 }
 
+                const inputRange = state.routes.map((_, i) => i)
+                const opacity = position.interpolate({
+                    inputRange,
+                    outputRange: inputRange.map((i) => (i === index ? 1 : 0)),
+                })
+
                 return (
                     <TouchableOpacity
-                        key={route.key}
+                        key={index}
                         accessibilityRole='button'
                         accessibilityState={isFocused ? { selected: true } : {}}
                         accessibilityLabel={options.tabBarAccessibilityLabel}
                         testID={options.tabBarTestID}
                         onPress={onPress}
                         onLongPress={onLongPress}
-                        style={styles.element}
+                        style={[
+                            styles.element,
+                            !isFocused
+                                ? styles.elementNonFocus
+                                : styles.elementFocus,
+                        ]}
                     >
-                        {label === 'HomeCmp' ? (
-                            isFocused ? (
-                                <HomeActiveIcon width={25} height={25} />
-                            ) : (
-                                <HomeInactiveIcon width={25} height={25} />
-                            )
-                        ) : label === 'AddCmp' ? (
-                            <AddIcon width={55} height={55} />
-                        ) : isFocused ? (
-                            <ProfileActiveIcon width={22} height={22} />
-                        ) : (
-                            <ProfileInactiveIcon width={22} height={22} />
-                        )}
+                        <Animated.Text
+                            style={[isFocused ? styles.textFocus : styles.text]}
+                        >
+                            {label}
+                        </Animated.Text>
                     </TouchableOpacity>
                 )
             })}
@@ -72,4 +69,4 @@ const Navbar = ({ state, descriptors, navigation }) => {
     )
 }
 
-export default Navbar
+export default TopTab

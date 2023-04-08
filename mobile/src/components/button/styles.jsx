@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         width: maxWidth * 0.8,
         backgroundColor: '#6A5ACB',
         borderRadius: 30,
-        paddingVertical: maxWidth * 0.05,
+        paddingVertical: maxWidth * 0.01,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     content: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 22,
+        fontSize: 20,
     },
 })
 

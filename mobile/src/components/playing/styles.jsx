@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet } from 'react-native'
 const maxWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
-    playingContain: {
+    playingContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

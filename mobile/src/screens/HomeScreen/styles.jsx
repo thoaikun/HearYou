@@ -1,17 +1,31 @@
 import { Dimensions, StyleSheet } from 'react-native'
 const maxWidth = Dimensions.get('window').width
-var maxHeight = Dimensions.get('window').height;
+var maxHeight = Dimensions.get('window').height
 
 const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-        height: maxHeight,
+    appBar: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        height: 80,
+        marginBottom: 45,
+        paddingBottom: 5,
         display: 'flex',
         justifyContent: 'flex-end',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        zIndex: 1000,
     },
-    logo: {
-        marginVertical: 30,
+    screenTitle: {
+        fontWeight: 600,
+        fontSize: 25,
+    },
+    bodyContainer: {
+        flex: 1,
+    },
+    headerText: {
+        width: '100%',
+        fontSize: 14,
+        textAlign: 'center',
     },
 })
 

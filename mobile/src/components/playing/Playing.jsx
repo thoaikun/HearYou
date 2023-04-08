@@ -5,14 +5,11 @@ import Play from '../../../assets/svg/play2.svg';
 import Pause from '../../../assets/svg/pause.svg';
 import { IconButton } from "@react-native-material/core";
 
-export const Playing = ({ title }) => {
+export default Playing = ({ title }) => {
     const [isPlay, setIsPlay] = useState(true)
-    const handleClick = () => {
-        setIsPlay(!isPlay)
-    }
 
     return (
-        <View style={styles.playingContain}>
+        <View style={styles.playingContainer}>
             <View style={styles.playingEpisode}>
                 <Image source={require("../../../assets/podcastthumnial.png")} style={styles.playingLogo} />
                 <Text style={styles.playingTitle}>Title</Text>
