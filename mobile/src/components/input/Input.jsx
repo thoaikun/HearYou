@@ -20,11 +20,13 @@ export default function Input(props) {
         onChangeText={onChangeText}
         value={value}
         {...props}
+        placeholderTextColor="#A2A9B8"
         style={[{
             borderWidth: 2,
             borderColor: "#A2A9B8",
             paddingHorizontal: 29,
-            paddingVertical: 34,
+            paddingTop: 16,
+            paddingBottom: 8,
             textAlignVertical: "top",
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
