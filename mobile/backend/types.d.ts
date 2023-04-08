@@ -1,7 +1,7 @@
 declare global {
     namespace app {
         type Podcast = {
-            id: string;
+            podcastID: string;
             name: string;
             ownerID: string;
             subscribes: number;
@@ -9,7 +9,7 @@ declare global {
         }
 
         type Episode = {
-            id: string;
+            episodeID: string;
             title: string;
             description: string;
             view: number;
