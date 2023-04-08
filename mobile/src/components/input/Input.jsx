@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { TextInput } from "react-native";
 
 /**
@@ -6,7 +6,7 @@ import { TextInput } from "react-native";
  * @param {import("react-native/types").TextInputProps} props
  * @returns
  */
-export default function Input(props) {
+function Input(props, ref) {
     const [value, setValue] = useState("");
 
     const onChangeText = (txt) => {
@@ -17,6 +17,7 @@ export default function Input(props) {
     }
 
     return <TextInput
+        ref={ref}
         onChangeText={onChangeText}
         value={value}
         {...props}
@@ -36,3 +37,4 @@ export default function Input(props) {
         }, props.style]}
     />
 }
+export default forwardRef(Input)
