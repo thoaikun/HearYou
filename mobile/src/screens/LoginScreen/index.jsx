@@ -21,7 +21,7 @@ const LoginScreen = () => {
         <TextInput
           placeholder="Email"
           value={username}
-          onChangeText={() => setUsername(username)}
+          onChangeText={(e) => setUsername(e)}
           style={{
             height: 40,
             margin: 12,
@@ -33,7 +33,7 @@ const LoginScreen = () => {
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={() => setPassword(password)}
+          onChangeText={(e) => setPassword(e)}
           secureTextEntry={true}
           style={{
             height: 40,
