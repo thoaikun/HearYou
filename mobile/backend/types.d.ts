@@ -1,5 +1,13 @@
 declare global {
     namespace app {
+        type Podcast = {
+            id: string;
+            name: string;
+            ownerID: string;
+            subscribes: number;
+            episodesID: string[];
+        }
+
         type Episode = {
             id: string;
             title: string;
