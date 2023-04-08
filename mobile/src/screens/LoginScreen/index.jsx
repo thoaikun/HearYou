@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { Image, ScrollView, TextInput, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import InoGraphic from '../../../assets/svg/inographic.svg'
 import Logo from '../../../assets/svg/logo.svg'
 import Button from '../../components/button/Button'
+import Input from '../../components/input/Input'
 import Context from '../../context/Context'
 import { signin } from '../../firebase/auth'
 import styles from './styles'
@@ -19,39 +20,21 @@ const LoginScreen = () => {
                 <Logo />
             </View>
             <View style={styles.inputContainer}>
-                <TextInput
+                <Input
                     placeholder='Email'
                     value={username}
                     onChangeText={(e) => setUsername(e)}
-                    style={{
-                        height: 50,
-                        margin: 12,
-                        borderWidth: 1,
-                        padding: 10,
-                        width: 300,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-                    }}
                 />
-                <TextInput
+                <Input
                     placeholder='Password'
                     value={password}
                     onChangeText={(e) => setPassword(e)}
                     secureTextEntry={true}
-                    style={{
-                        height: 50,
-                        margin: 12,
-                        borderWidth: 1,
-                        padding: 10,
-                        width: 300,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-                    }}
                 />
             </View>
             <Button
                 content='Log In'
-                style={{ marginTop: 20, paddingVertical: 10 }}
+                style={{ marginTop: 10, paddingVertical: 10 }}
                 onPress={async () => {
                     const res = await signin({
                         email: username,

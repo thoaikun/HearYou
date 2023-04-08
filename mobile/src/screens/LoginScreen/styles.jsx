@@ -3,24 +3,20 @@ var maxWidth = Dimensions.get('window').width
 var maxHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        height: maxHeight,
-        display: 'flex',
         paddingVertical: 50,
         paddingHorizontal: 40,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        alignItems: "stretch",
     },
     info: {
-        flex: 1,
         // aspectRatio: 287 / 441,
-        // resizeMode: 'contain',
+        resizeMode: 'contain',
     },
     logo: {
         marginTop: 20,
     },
     inputContainer: {
-        marginTop: 20,
+        marginTop: 50,
     },
 })
 
