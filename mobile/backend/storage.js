@@ -11,7 +11,8 @@ import { storage } from "../config/firebase";
  */
 export async function uploadEpisode(episode, file) {
     const storageRef = ref(storage, `episodes/${episode.episodeID}`);
-    return await uploadBytes(storageRef, file);
+    const snapshot = await uploadBytes(storageRef, file);
+    return await getDownloadURL(snapshot.ref);
 }
 
 /**
