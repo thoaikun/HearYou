@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
-    aspectRatio: 287 / 441,
+    height: 300,
     resizeMode: 'contain',
   },
   logo: {

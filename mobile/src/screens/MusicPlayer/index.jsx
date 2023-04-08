@@ -7,8 +7,31 @@ import PrevIcon from '../../../assets/svg/skip-to-previous.svg';
 import NextIcon from '../../../assets/svg/skip-to-next.svg';
 import PlayActive from '../../../assets/svg/play_active.svg';
 import PlayInActive from '../../../assets/svg/play_inactive.svg';
-
+import { Audio } from 'expo-av';
 const MusicPlayer = () => {
+  const [obj, setObject] = React.useState({ sound: undefined, active: false });
+  async function playSound() {
+    console.log('Loading Sound');
+    const source = {
+      uri: 'https://file-examples.com/storage/fe9278ad7f642dbd39ac5c9/2017/11/file_example_MP3_700KB.mp3',
+    };
+    const { sound } = await Audio.Sound.createAsync(source);
+    if (!obj.active) {
+      setObject({ sound: sound, active: true });
+    } else {
+      setObject({ sound: undefined, active: false });
+    }
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+  React.useEffect(() => {
+    return obj.sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [obj.sound]);
   return (
     <View style={styles.container}>
       <Title title="Playing" />
@@ -36,8 +59,12 @@ const MusicPlayer = () => {
         <Pressable>
           <PrevIcon width={60} height={60} />
         </Pressable>
-        <Pressable>
-          <PlayActive width={80} height={80} />
+        <Pressable onPress={() => playSound()}>
+          {!obj.active ? (
+            <PlayActive width={80} height={80} />
+          ) : (
+            <PlayInActive width={80} height={80} />
+          )}
         </Pressable>
         <Pressable>
           <NextIcon width={60} height={60} />
