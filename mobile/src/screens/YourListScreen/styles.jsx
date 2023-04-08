@@ -2,12 +2,18 @@ import { Dimensions, StyleSheet } from 'react-native';
 var maxWidth = Dimensions.get('window').width;
 var maxHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-  container: {
+  yourlistContainer: {
+    // flex: 1,
     height: maxHeight,
-    width: maxWidth,
     display: 'flex',
-    justifyContent: 'center',
-    paddingHorizontal: 22,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  yourlistTitle: {
+    height: 100,
+    width: maxWidth,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });
 

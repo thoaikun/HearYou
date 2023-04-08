@@ -4,6 +4,9 @@ import ListCard from './src/components/listCard/ListCard'
 import PodcastCard from './src/components/podcastCard/PodcastCard'
 import TabNavigator from './src/navigation/navigation'
 import LoginScreen from './src/screens/LoginScreen/index'
+import HomeScreen from './src/screens/HomeScreen'
+import ProfileScreen from './src/screens/ProfileScreen'
+import YourListScreen from './src/screens/YourListScreen'
 
 export default function App() {
     return (
@@ -14,7 +17,8 @@ export default function App() {
         //     alignItems: 'center',
         // }}
         >
-            <LoginScreen />
+            {/* <LoginScreen /> */}
+            <ProfileScreen />
         </View>
     )
 }

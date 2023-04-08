@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+const maxWidth = Dimensions.get('window').width
 
 export default StyleSheet.create({
     container: {
@@ -8,7 +9,8 @@ export default StyleSheet.create({
         display: "flex",
         // elevation: 1,
         borderWidth: 2,
-        borderColor: "#eee"
+        borderColor: "#eee",
+        marginBottom: 20
     },
     title: {
         fontWeight: 600,
@@ -19,8 +21,20 @@ export default StyleSheet.create({
         minHeight: 100,
         fontSize: 18,
     },
-    button: {
-        width: "auto",
-        paddingVertical: 12,
-    }
+    btn: {
+        width: maxWidth * 0.5,
+        backgroundColor: '#6A5ACB',
+        borderRadius: 30,
+        paddingVertical: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    pressed: {
+        backgroundColor: '#574AA7',
+    },
+    content: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
 });
