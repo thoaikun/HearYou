@@ -1,27 +1,23 @@
 import * as React from 'react';
-import { Image, View, TextInput } from 'react-native';
+import { TextInput, Image, View } from 'react-native';
+import InoGraphic from '../../../assets/svg/inographic.svg';
+import Logo from '../../../assets/svg/logo.svg';
 import Button from '../../components/button/Button';
 import styles from './styles';
-import * as React from 'react'
-import { Image, View } from 'react-native'
-import InoGraphic from '../../../assets/svg/inographic.svg'
-import Logo from '../../../assets/svg/logo.svg'
-import Button from '../../components/button/Button'
-import styles from './styles'
 
 const LoginScreen = () => {
-    const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const handleSubmit = () => {
     addNewUser(username, password);
   };
   return (
-        <View style={styles.container}>
-            <InoGraphic />
-            <View style={styles.logo}>
-                <Logo />
-            </View>
-            <View>
+    <View style={styles.container}>
+      <InoGraphic height={200} />
+      <View style={styles.logo}>
+        <Logo />
+      </View>
+      <View>
         <TextInput
           placeholder="Username"
           value={username}
@@ -49,14 +45,12 @@ const LoginScreen = () => {
         />
       </View>
       <Button
-                content='Log In'
-                style={{ marginTop: 50, paddingVertical: 10 }}
-              onPress={() => handleSubmit()}
+        content="Log In"
+        style={{ marginTop: 50, paddingVertical: 10 }}
+        onPress={() => handleSubmit()}
       />
-        </View>
-    )
-}
-
-export default LoginScreen
+    </View>
+  );
+};
 
 export default LoginScreen;
