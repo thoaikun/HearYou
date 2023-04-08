@@ -52,13 +52,13 @@ const Navbar = ({ state, descriptors, navigation }) => {
                         onLongPress={onLongPress}
                         style={styles.element}
                     >
-                        {label === 'Home' ? (
+                        {label === 'HomeCmp' ? (
                             isFocused ? (
                                 <HomeActiveIcon width={25} height={25} />
                             ) : (
                                 <HomeInactiveIcon width={25} height={25} />
                             )
-                        ) : label === 'Add' ? (
+                        ) : label === 'AddCmp' ? (
                             <AddIcon width={55} height={55} />
                         ) : isFocused ? (
                             <ProfileActiveIcon width={22} height={22} />
