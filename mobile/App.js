@@ -1,5 +1,6 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import React, { useContext, useEffect } from 'react'
+import Playing from './src/components/playing/Playing'
 import Context, { Provider } from './src/context/Context'
 import { checkAuth } from './src/firebase/auth'
 import TabNavigator from './src/navigation/navigation'
@@ -21,15 +22,19 @@ function App() {
         return checkAuth(setLogin, ctx)
     }, [])
 
-    return (
-        login ? (
+    return login ? (
+        <>
             <NavigationContainer theme={LightTheme}>
                 <TabNavigator />
             </NavigationContainer>
-        ) : (
-            <LoginScreen />
-        )
+        </>
+    ) : (
+        <LoginScreen />
     )
 }
 
-export default () => <Provider><App /></Provider>
+export default () => (
+    <Provider>
+        <App />
+    </Provider>
+)

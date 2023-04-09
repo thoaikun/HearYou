@@ -23,13 +23,13 @@ const TOPICS = [
 ]
 
 export default function UploadEpisodeScreen() {
+    const ref2 = useRef()
+    const ref3 = useRef()
+    const ref4 = useRef()
+    const ref5 = useRef()
 
-    const ref2 = useRef();
-    const ref3 = useRef();
-    const ref4 = useRef();
-    const ref5 = useRef();
-
-    const { uid } = useContext(Context);
+    const { uid } = useContext(Context)
+    const navigation = useNavigation()
 
     const [questions, setQuestions] = useState(null);
     const [audio, setAudio] = useState();
@@ -37,8 +37,9 @@ export default function UploadEpisodeScreen() {
     const [description, setDescription] = useState('')
 
     const pickFile = async () => {
-
-        let result = await DocumentPicker.getDocumentAsync({ type: "audio/mpeg" }).then(response => {
+        let result = await DocumentPicker.getDocumentAsync({
+            type: 'audio/mpeg',
+        }).then((response) => {
             console.log(response)
             if (response.type == 'success') {
                 let { name, size, uri } = response;
@@ -74,10 +75,10 @@ export default function UploadEpisodeScreen() {
     }
 
     useEffect(() => {
-        (async () => {
-            const podcast = await getPodcastByUser(uid);
-            const questions = await getUnansweredQuestions(podcast.podcastID);
-            setQuestions(questions);
+        ;(async () => {
+            const podcast = await getPodcastByUser(uid)
+            const questions = await getUnansweredQuestions(podcast.podcastID)
+            setQuestions(questions)
         })()
     })
 
@@ -134,7 +135,7 @@ export default function UploadEpisodeScreen() {
                     )}
             <View style={{ marginVertical: 20, flexDirection: "row", alignItems: "center", gap: 10, }}>
                 <Button content="Select file" onPress={pickFile} style={{ paddingVertical: 10, width: 130 }} />
-                <Text>{audio ? audio.name : "Chọn một file .mp3"}</Text>
+                <Text>{audio ? audio.name : "Choose a file .mp3"}</Text>
             </View>
             <Button content="Publish podcast" style={styles.button}
                 ref={ref5} onPress={handleUpdate} />

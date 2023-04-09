@@ -1,17 +1,24 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { NavigationContainer } from '@react-navigation/native'
+import {
+    NavigationContainer,
+    useNavigation,
+    useRoute,
+} from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import BellIcon from '../../../assets/svg/bell_icon.svg'
 import PodcastCard from '../../components/podcastCard/PodcastCard'
 import TopTab from '../../components/tab/Tab'
-import styles from './styles'
+import Context from '../../context/Context'
 import { getNewestEpisode, getTrendingEpisode } from '../../firebase/firestore'
+import styles from './styles'
 
 const Tab = createMaterialTopTabNavigator()
 
 const Trending = () => {
     const [listEpisodes, setListEpisodes] = useState([])
+    const navigation = useNavigation()
+    const { setTrack } = React.useContext(Context)
 
     useEffect(() => {
         const handle = async () => {
@@ -28,15 +35,26 @@ const Trending = () => {
 
     return (
         <ScrollView>
-            {listEpisodes.map((item) =>
-                <PodcastCard key={item.episodeID} item={item}> </PodcastCard>
-            )}
+            {listEpisodes.map((item) => (
+                <PodcastCard
+                    key={item.episodeID}
+                    item={item}
+                    onPress={() => {
+                        setTrack(item)
+                        navigation.navigate('Playing', {
+                            ...item,
+                        })
+                    }}
+                />
+            ))}
         </ScrollView>
     )
 }
 
 const Newest = () => {
     const [listEpisodes, setListEpisodes] = useState([])
+    const { setTrack } = React.useContext(Context)
+    const navigation = useNavigation()
 
     useEffect(() => {
         const handle = async () => {
@@ -53,9 +71,18 @@ const Newest = () => {
 
     return (
         <View>
-            {listEpisodes.map((item) =>
-                <PodcastCard key={item.episodeID} item={item}> </PodcastCard>
-            )}
+            {listEpisodes.map((item) => (
+                <PodcastCard
+                    key={item.episodeID}
+                    item={item}
+                    onPress={() => {
+                        setTrack(item)
+                        navigation.navigate('Playing', {
+                            ...item,
+                        })
+                    }}
+                />
+            ))}
         </View>
     )
 }

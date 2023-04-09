@@ -11,20 +11,21 @@ const styles = StyleSheet.create({
         width: maxWidth,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        paddingHorizontal: 30
+        paddingHorizontal: 30,
     },
     playingEpisode: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     playingLogo: {
         height: 40,
-        width: 40
+        width: 40,
     },
     playingTitle: {
+        width: '70%',
         color: 'white',
         fontWeight: 'bold',
-        marginStart: 20
+        marginStart: 20,
     },
 })
 
