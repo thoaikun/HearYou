@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { width: maxWidth } = Dimensions.get("screen");
 
 export default StyleSheet.create({
     appBar: {
@@ -19,6 +21,7 @@ export default StyleSheet.create({
         fontSize: 25,
     },
     container: {
+        width: maxWidth,
         paddingHorizontal: 38,
     },
     button: {
