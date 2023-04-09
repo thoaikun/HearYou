@@ -1,8 +1,8 @@
 // TODO: storage helper functions
 // @ts-check
 
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "./config";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { storage } from './config'
 
 /**
  *
@@ -10,9 +10,9 @@ import { storage } from "./config";
  * @param {File} file
  */
 export async function uploadEpisode(episode, file) {
-    const storageRef = ref(storage, `episodes/${episode.episodeID}`);
-    const snapshot = await uploadBytes(storageRef, file);
-    return await getDownloadURL(snapshot.ref);
+    const storageRef = ref(storage, `episodes/${episode.episodeID}`)
+    const snapshot = await uploadBytes(storageRef, file)
+    return await getDownloadURL(snapshot.ref)
 }
 
 /**
@@ -20,8 +20,8 @@ export async function uploadEpisode(episode, file) {
  * @param {app.Episode} episode
  */
 export async function getEpisodeUrl(episode) {
-    const storageRef = ref(storage, `episodes/${episode.episodeID}`);
-    return await getDownloadURL(storageRef);
+    const storageRef = ref(storage, `episodes/${episode.episodeID}.mp3`)
+    return await getDownloadURL(storageRef)
 }
 
 /**
@@ -30,8 +30,8 @@ export async function getEpisodeUrl(episode) {
  * @param {File} file
  */
 export async function uploadThumbnail(podcast, file) {
-    const storageRef = ref(storage, `thumbnails/${podcast.podcastID}`);
-    return await uploadBytes(storageRef, file);
+    const storageRef = ref(storage, `thumbnails/${podcast.podcastID}`)
+    return await uploadBytes(storageRef, file)
 }
 
 /**
@@ -40,6 +40,6 @@ export async function uploadThumbnail(podcast, file) {
  * @returns
  */
 export async function getThumbnailUrl(podcast) {
-    const storageRef = ref(storage, `thumbnails/${podcast.podcastID}.jpg`);
-    return await getDownloadURL(storageRef);
+    const storageRef = ref(storage, `thumbnails/${podcast.podcastID}.jpg`)
+    return await getDownloadURL(storageRef)
 }

@@ -1,28 +1,37 @@
-import { Image, Text, View } from 'react-native'
+import { Image, Pressable, Text, View } from 'react-native'
 import InactivePlayIcon from '../../../assets/svg/play_inactive.svg'
 
-import styles from './styles'
 import { useEffect, useState } from 'react'
 import { getThumbnailUrl } from '../../firebase/storage'
+import styles from './styles'
 
-const PodcastCard = ({ item }) => {
+const PodcastCard = ({ item, onPress }) => {
     const [url, setUrl] = useState(null)
 
     useEffect(() => {
-        getThumbnailUrl(item).then((res) => { setUrl(res); console.log(res) })
+        getThumbnailUrl(item).then((res) => {
+            setUrl(res)
+            console.log(res)
+        })
     }, [])
 
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={() => onPress()}>
             <View style={styles.header}>
                 <View style={styles.infoContainer}>
                     <Image
                         style={styles.image}
-                        source={url ? {
-                            uri: url
-                        } : require('../../../assets/thumbnail.jpg')}
+                        source={
+                            url
+                                ? {
+                                      uri: url,
+                                  }
+                                : require('../../../assets/thumbnail.jpg')
+                        }
                     />
-                    <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
+                    <Text numberOfLines={2} style={styles.title}>
+                        {item.title}
+                    </Text>
                 </View>
                 <View>
                     <InactivePlayIcon width={50} height={50} />
@@ -32,7 +41,7 @@ const PodcastCard = ({ item }) => {
                 {item.description}
             </Text>
             <View style={styles.bar}></View>
-        </View>
+        </Pressable>
     )
 }
 

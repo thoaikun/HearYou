@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React, { useContext } from 'react'
 import { View } from 'react-native'
 import Navbar from '../components/navbar/Navbar'
+import Playing from '../components/playing/Playing'
 import Context from '../context/Context'
 import HomeScreen from '../screens/HomeScreen'
 import LoginScreen from '../screens/LoginScreen'
@@ -19,14 +20,16 @@ const Profile = createStackNavigator()
 
 const HomeStackCmp = () => {
     return (
-        <Home.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Home.Screen name='Home' component={HomeScreen} />
-            <Home.Screen name='Playing' component={MusicPlayer} />
-        </Home.Navigator>
+        <>
+            <Home.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
+                <Home.Screen name='Home' component={HomeScreen} />
+                <Home.Screen name='Playing' component={MusicPlayer} />
+            </Home.Navigator>
+        </>
     )
 }
 
@@ -50,29 +53,33 @@ const AddStackCmp = () => {
 
 const ProfileStackCmp = () => {
     return (
-        <Profile.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Profile.Screen name='Profile' component={ProfileScreen} />
-            <Profile.Screen name='Your list' component={YourListScreen} />
-        </Profile.Navigator>
+        <>
+            <Profile.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
+                <Profile.Screen name='Profile' component={ProfileScreen} />
+                <Profile.Screen name='Your list' component={YourListScreen} />
+            </Profile.Navigator>
+        </>
     )
 }
 
 function TabNavigator() {
     return (
-        <Tab.Navigator
-            tabBar={(props) => <Navbar {...props} />}
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Tab.Screen name='HomeCmp' component={HomeStackCmp} />
-            <Tab.Screen name='AddCmp' component={AddStackCmp} />
-            <Tab.Screen name='ProfileCmp' component={ProfileStackCmp} />
-        </Tab.Navigator>
+        <>
+            <Tab.Navigator
+                tabBar={(props) => <Navbar {...props} />}
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
+                <Tab.Screen name='HomeCmp' component={HomeStackCmp} />
+                <Tab.Screen name='AddCmp' component={AddStackCmp} />
+                <Tab.Screen name='ProfileCmp' component={ProfileStackCmp} />
+            </Tab.Navigator>
+        </>
     )
 }
 
