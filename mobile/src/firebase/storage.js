@@ -1,7 +1,7 @@
 // TODO: storage helper functions
 // @ts-check
 
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, updateMetadata, uploadBytes } from "firebase/storage";
 import { storage } from "./config";
 
 /**
@@ -10,8 +10,9 @@ import { storage } from "./config";
  * @param {File} file
  */
 export async function uploadEpisode(episode, file) {
-    const storageRef = ref(storage, `episodes/${episode.episodeID}`);
+    const storageRef = ref(storage, `episodes/${episode.episodeID}.mp3`);
     const snapshot = await uploadBytes(storageRef, file);
+    await updateMetadata(storageRef, { contentType: "audio/mpeg" })
     return await getDownloadURL(snapshot.ref);
 }
 

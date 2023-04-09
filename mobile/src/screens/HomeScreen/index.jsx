@@ -18,8 +18,12 @@ const Trending = () => {
             const res = await getTrendingEpisode()
             setListEpisodes(res)
         }
+        
+        const timerId = setInterval(() => {
+            handle()
+        }, 5000);
 
-        handle()
+        return () => clearInterval(timerId)
     }, [])
 
     return (
@@ -40,7 +44,11 @@ const Newest = () => {
             setListEpisodes(res)
         }
 
-        handle()
+        const timerId = setInterval(() => {
+            handle()
+        }, 5000);
+
+        return () => clearInterval(timerId)
     }, [])
 
     return (

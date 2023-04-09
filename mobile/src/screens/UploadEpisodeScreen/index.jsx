@@ -7,10 +7,13 @@ import BackIcon from "../../../assets/svg/back_icon.svg";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import Context from "../../context/Context";
-import { getPodcastByUser, getUnansweredQuestions } from "../../firebase/firestore";
+import { addNewEpisode, getPodcastByUser, getUnansweredQuestions } from "../../firebase/firestore";
 import styles from "./styles";
+import { uploadEpisode } from "../../firebase/storage";
+import * as Crypto from 'expo-crypto';
 
 const TOPICS = [
+    "Chose Topic",
     "peer-pressure",
     "depression",
     "anxiety",
@@ -29,27 +32,45 @@ export default function UploadEpisodeScreen() {
     const { uid } = useContext(Context);
 
     const [questions, setQuestions] = useState(null);
-    const [ audio, setAudio ] = useState();
+    const [audio, setAudio] = useState();
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
 
     const pickFile = async () => {
 
         let result = await DocumentPicker.getDocumentAsync({ type: "audio/mpeg" }).then(response => {
             console.log(response)
             if (response.type == 'success') {
-              let { name, size, uri } = response;
-              let nameParts = name.split('.');
-              let fileType = nameParts[nameParts.length - 1];
-              var fileToUpload = {
-                name: name,
-                size: size,
-                uri: uri,
-                type: "application/" + fileType
-              };
-              console.log(fileToUpload, '...............file')
-              setAudio(fileToUpload);
+                let { name, size, uri } = response;
+                let nameParts = name.split('.');
+                let fileType = nameParts[nameParts.length - 1];
+                var fileToUpload = {
+                    name: name,
+                    size: size,
+                    uri: uri,
+                    type: "application/" + fileType
+                };
+                console.log(fileToUpload, '...............file')
+                setAudio(fileToUpload);
             }
-          });
+        });
         // console.log(result);
+    }
+    const [topic, setTopic] = useState("Chose Topic")
+
+    const handleUpdate = async () => {
+        const episodeID = Crypto.randomUUID()
+        const fileUpload = (await fetch(audio.uri)).blob()
+        await uploadEpisode({ episodeID: episodeID }, fileUpload)
+        const podcast = await getPodcastByUser(uid);
+        addNewEpisode({
+            episodeID: episodeID,
+            title: title,
+            description: description,
+            topic: topic,
+            podcastID: podcast.podcastID,
+            podcastName: podcast.name,
+        })
     }
 
     useEffect(() => {
@@ -68,11 +89,15 @@ export default function UploadEpisodeScreen() {
         <ScrollView style={styles.container}>
             <View style={{ height: 130 }} />
             <Input placeholder="Title"
-                onSubmitEditing={() => ref2.current.focus() } />
+                value={title}
+                onChangeText={(e) => setTitle(e)}
+                onSubmitEditing={() => ref2.current.focus()} />
             <Input placeholder="Description"
                 multiline numberOfLines={6}
                 ref={ref2}
-                onSubmitEditing={() => ref4.current.focus() }
+                value={description}
+                onChangeText={(e) => setDescription(e)}
+                onSubmitEditing={() => ref4.current.focus()}
                 blurOnSubmit={false} />
             {/* <Input placeholder="Podcast"
                 ref={ref3}
@@ -88,7 +113,7 @@ export default function UploadEpisodeScreen() {
                 marginBottom: 40,
                 fontSize: 16,
             }}>
-                <Picker>
+                <Picker selectedValue={topic} onValueChange={(e) => setTopic(e)}>
                     {TOPICS.map((topic, index) => <Picker.Item key={topic} label={topic} value={topic} />)}
                 </Picker>
             </View>
@@ -98,21 +123,21 @@ export default function UploadEpisodeScreen() {
             {questions === null
                 ? <Text>Loading</Text>
                 : questions.length == 0
-                ? <Text>No questions</Text>
-                : questions.map(question =>
-                <View key={question.questionID} style={{ flexDirection: 'row', gap: 10, alignItems: "center", marginBottom: 20, }}>
-                    <Checkbox />
-                    <Text numberOfLines={2} style={{ fontSize: 16 }}>
-                        {question.description}
-                    </Text>
-                </View>
-            )}
+                    ? <Text>No questions</Text>
+                    : questions.map(question =>
+                        <View key={question.questionID} style={{ flexDirection: 'row', gap: 10, alignItems: "center", marginBottom: 20, }}>
+                            <Checkbox />
+                            <Text numberOfLines={2} style={{ fontSize: 16 }}>
+                                {question.description}
+                            </Text>
+                        </View>
+                    )}
             <View style={{ marginVertical: 20, flexDirection: "row", alignItems: "center", gap: 10, }}>
                 <Button content="Select file" onPress={pickFile} style={{ paddingVertical: 10, width: 130 }} />
                 <Text>{audio ? audio.name : "Chọn một file .mp3"}</Text>
             </View>
             <Button content="Publish podcast" style={styles.button}
-                ref={ref5} />
+                ref={ref5} onPress={handleUpdate} />
         </ScrollView>
     </>
 }

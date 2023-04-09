@@ -2,7 +2,7 @@
 // @ts-check
 
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
+import * as Crypto from 'expo-crypto';
 import { firestore } from './config';
 
 // Users
@@ -37,6 +37,16 @@ export const getPodcastData = async (pid) => {
         return docSnap.data()
     else
         return null
+}
+
+export const getAllPodcast = async () => {
+    const q = query(collection(firestore, "podcasts"))
+    const querySnapshot = await getDocs(q);
+    const listPodcasts = []
+    querySnapshot.forEach((doc) => {
+        listPodcasts.push(doc.data())
+    })
+    return listPodcasts
 }
 
 // Episodes
@@ -80,16 +90,14 @@ export const getEpisodeByTopic = async (topic) => {
 }
 
 export const addNewEpisode = async (payload) => {
-    const episodeID = uuidv4()
-    await setDoc(doc(firestore, "episodes", episodeID), {
-        episodeID: episodeID,
+    await setDoc(doc(firestore, "episodes", payload.episodeID), {
+        episodeID: payload.episodeID,
         title: payload.title,
         description: payload.description,
         view: 0,
         topic: payload.topic,
-        url: payload.url,
-        authorID: payload.authorID,
-        authorName: payload.authorName,
+        podcastID: payload.podcastID,
+        podcastName: payload.podcastName,
         createdAt: new Date(),
         questionsID: [],
         advertiseID: null
@@ -107,7 +115,7 @@ export const getAdvertise = async (aid) => {
 }
 
 export const addNewAdvertise = async (payload) => {
-    const adsID = uuidv4()
+    const adsID = Crypto.randomUUID()
     await setDoc(doc(firestore, "advertises", adsID), {
         advertiseID: adsID,
         title: payload.title,
@@ -137,7 +145,7 @@ export const getQuestionByUserID = async (uid) => {
 }
 
 export const getQuestionByPodcastID = async (uid) => {
-    const qq =  query(collection(firestore, "podcasts"), where("ownerID", "==", uid))
+    const qq = query(collection(firestore, "podcasts"), where("ownerID", "==", uid))
     const querySnapshott = await getDocs(qq)
     const abc = []
     querySnapshott.forEach((doc) => {
@@ -154,11 +162,13 @@ export const getQuestionByPodcastID = async (uid) => {
 }
 
 export const addNewQuestion = async (payload) => {
-    const quesID = uuidv4()
+    const quesID = Crypto.randomUUID()
     await setDoc(doc(firestore, "questions", quesID), {
+        userID: payload.userID,
         questionID: quesID,
         description: payload.description,
-        episodeID: payload.episodeID
+        podcastID: payload.podcastID,
+        episodeID: null
     })
 }
 
