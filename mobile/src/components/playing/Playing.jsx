@@ -22,38 +22,42 @@ export default Playing = ({ title }) => {
     }, [track])
 
     return (
-        <Pressable
-            style={styles.playingContainer}
-            onPress={() => navigation.navigate('Playing', track)}
-        >
-            <View style={styles.playingEpisode}>
-                <Image
-                    source={
-                        thumbnail
-                            ? {
-                                  uri: thumbnail,
-                              }
-                            : require('../../../assets/thumbnail.png')
-                    }
-                    style={styles.playingLogo}
-                />
-                <Text style={styles.playingTitle} numberOfLines={1}>
-                    {track ? track.title : 'Unknown'}
-                </Text>
-            </View>
-            <IconButton
-                icon={
-                    !isPlay ? (
-                        <Pause height='40' width='40' />
-                    ) : (
-                        <Play height='40' width='40' />
-                    )
-                }
-                onPress={() => {
-                    setIsPlay(!isPlay)
-                    handleAudio()
-                }}
-            />
-        </Pressable>
+        <>
+            {track && (
+                <Pressable
+                    style={styles.playingContainer}
+                    onPress={() => navigation.navigate('Playing', track)}
+                >
+                    <View style={styles.playingEpisode}>
+                        <Image
+                            source={
+                                thumbnail
+                                    ? {
+                                          uri: thumbnail,
+                                      }
+                                    : require('../../../assets/thumbnail.png')
+                            }
+                            style={styles.playingLogo}
+                        />
+                        <Text style={styles.playingTitle} numberOfLines={1}>
+                            {track ? track.title : 'Unknown'}
+                        </Text>
+                    </View>
+                    <IconButton
+                        icon={
+                            !isPlay ? (
+                                <Pause height='40' width='40' />
+                            ) : (
+                                <Play height='40' width='40' />
+                            )
+                        }
+                        onPress={() => {
+                            setIsPlay(!isPlay)
+                            handleAudio()
+                        }}
+                    />
+                </Pressable>
+            )}
+        </>
     )
 }

@@ -25,10 +25,10 @@ const Trending = () => {
             const res = await getTrendingEpisode()
             setListEpisodes(res)
         }
-        
+
         const timerId = setInterval(() => {
             handle()
-        }, 5000);
+        }, 5000)
 
         return () => clearInterval(timerId)
     }, [])
@@ -64,13 +64,13 @@ const Newest = () => {
 
         const timerId = setInterval(() => {
             handle()
-        }, 5000);
+        }, 5000)
 
         return () => clearInterval(timerId)
     }, [])
 
     return (
-        <View>
+        <ScrollView>
             {listEpisodes.map((item) => (
                 <PodcastCard
                     key={item.episodeID}
@@ -83,7 +83,7 @@ const Newest = () => {
                     }}
                 />
             ))}
-        </View>
+        </ScrollView>
     )
 }
 
