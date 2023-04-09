@@ -1,20 +1,28 @@
-import { Dimensions, StyleSheet } from 'react-native';
-var maxWidth = Dimensions.get('window').width;
-var maxHeight = Dimensions.get('window').height;
+import { Dimensions, StyleSheet } from 'react-native'
+var maxWidth = Dimensions.get('window').width
+var maxHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
-  yourlistContainer: {
-    // flex: 1,
-    height: maxHeight,
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
-  yourlistTitle: {
-    height: 100,
-    width: maxWidth,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-});
+    yourlistContainer: {
+        // flex: 1,
+    },
+    yourlistTitle: {
+        height: 100,
+        width: maxWidth,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    appBar: {
+        height: 100,
+        marginBottom: 45,
+        paddingBottom: 5,
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    screenTitle: {
+        fontWeight: 600,
+        fontSize: 25,
+    },
+})
 
-export default styles;
+export default styles

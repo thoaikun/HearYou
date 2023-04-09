@@ -1,118 +1,169 @@
-import { Picker } from "@react-native-picker/picker";
-import Checkbox from "expo-checkbox";
-import * as DocumentPicker from 'expo-document-picker';
-import { useContext, useEffect, useRef, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
-import BackIcon from "../../../assets/svg/back_icon.svg";
-import Button from "../../components/button/Button";
-import Input from "../../components/input/Input";
-import Context from "../../context/Context";
-import { getPodcastByUser, getUnansweredQuestions } from "../../firebase/firestore";
-import styles from "./styles";
+import { Picker } from '@react-native-picker/picker'
+import { useNavigation } from '@react-navigation/native'
+import Checkbox from 'expo-checkbox'
+import * as DocumentPicker from 'expo-document-picker'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { Pressable, ScrollView, Text, View } from 'react-native'
+import BackIcon from '../../../assets/svg/back_icon.svg'
+import Button from '../../components/button/Button'
+import Input from '../../components/input/Input'
+import Context from '../../context/Context'
+import {
+    getPodcastByUser,
+    getUnansweredQuestions,
+} from '../../firebase/firestore'
+import styles from './styles'
 
 const TOPICS = [
-    "peer-pressure",
-    "depression",
-    "anxiety",
-    "self-esteem",
-    "burn-out",
-    "stress",
+    'peer-pressure',
+    'depression',
+    'anxiety',
+    'self-esteem',
+    'burn-out',
+    'stress',
 ]
 
 export default function UploadEpisodeScreen() {
+    const ref2 = useRef()
+    const ref3 = useRef()
+    const ref4 = useRef()
+    const ref5 = useRef()
 
-    const ref2 = useRef();
-    const ref3 = useRef();
-    const ref4 = useRef();
-    const ref5 = useRef();
+    const { uid } = useContext(Context)
+    const navigation = useNavigation()
 
-    const { uid } = useContext(Context);
-
-    const [questions, setQuestions] = useState(null);
-    const [ audio, setAudio ] = useState();
+    const [questions, setQuestions] = useState(null)
+    const [audio, setAudio] = useState()
 
     const pickFile = async () => {
-
-        let result = await DocumentPicker.getDocumentAsync({ type: "audio/mpeg" }).then(response => {
+        let result = await DocumentPicker.getDocumentAsync({
+            type: 'audio/mpeg',
+        }).then((response) => {
             console.log(response)
             if (response.type == 'success') {
-              let { name, size, uri } = response;
-              let nameParts = name.split('.');
-              let fileType = nameParts[nameParts.length - 1];
-              var fileToUpload = {
-                name: name,
-                size: size,
-                uri: uri,
-                type: "application/" + fileType
-              };
-              console.log(fileToUpload, '...............file')
-              setAudio(fileToUpload);
+                let { name, size, uri } = response
+                let nameParts = name.split('.')
+                let fileType = nameParts[nameParts.length - 1]
+                var fileToUpload = {
+                    name: name,
+                    size: size,
+                    uri: uri,
+                    type: 'application/' + fileType,
+                }
+                console.log(fileToUpload, '...............file')
+                setAudio(fileToUpload)
             }
-          });
+        })
         // console.log(result);
     }
 
     useEffect(() => {
-        (async () => {
-            const podcast = await getPodcastByUser(uid);
-            const questions = await getUnansweredQuestions(podcast.podcastID);
-            setQuestions(questions);
+        ;(async () => {
+            const podcast = await getPodcastByUser(uid)
+            const questions = await getUnansweredQuestions(podcast.podcastID)
+            setQuestions(questions)
         })()
     })
 
-    return <>
-        <View style={styles.appBar}>
-            <BackIcon style={{ position: "absolute", bottom: 0, left: 38 }} />
-            <Text style={styles.screenTitle}>Upload</Text>
-        </View>
-        <ScrollView style={styles.container}>
-            <View style={{ height: 130 }} />
-            <Input placeholder="Title"
-                onSubmitEditing={() => ref2.current.focus() } />
-            <Input placeholder="Description"
-                multiline numberOfLines={6}
-                ref={ref2}
-                onSubmitEditing={() => ref4.current.focus() }
-                blurOnSubmit={false} />
-            {/* <Input placeholder="Podcast"
+    return (
+        <>
+            <View style={styles.appBar}>
+                <Pressable
+                    style={{ position: 'absolute', bottom: 0, left: 38 }}
+                    onPress={() => navigation.goBack()}
+                >
+                    <BackIcon />
+                </Pressable>
+                <Text style={styles.screenTitle}>Upload</Text>
+            </View>
+            <ScrollView style={styles.container}>
+                <View style={{ height: 130 }} />
+                <Input
+                    placeholder='Title'
+                    onSubmitEditing={() => ref2.current.focus()}
+                />
+                <Input
+                    placeholder='Description'
+                    multiline
+                    numberOfLines={6}
+                    ref={ref2}
+                    onSubmitEditing={() => ref4.current.focus()}
+                    blurOnSubmit={false}
+                />
+                {/* <Input placeholder="Podcast"
                 ref={ref3}
                 onSubmitEditing={() => ref4.current.focus()}
                 blurOnSubmit={false}  /> */}
-            <View style={{
-                borderWidth: 2,
-                borderColor: "#A2A9B8",
-                paddingHorizontal: 17,
-                textAlignVertical: "top",
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                marginBottom: 40,
-                fontSize: 16,
-            }}>
-                <Picker>
-                    {TOPICS.map((topic, index) => <Picker.Item key={topic} label={topic} value={topic} />)}
-                </Picker>
-            </View>
-            <Text style={{ fontWeight: 600, fontSize: 20, marginBottom: 10 }}>
-                List of questions answered in this episode
-            </Text>
-            {questions === null
-                ? <Text>Loading</Text>
-                : questions.length == 0
-                ? <Text>No questions</Text>
-                : questions.map(question =>
-                <View key={question.questionID} style={{ flexDirection: 'row', gap: 10, alignItems: "center", marginBottom: 20, }}>
-                    <Checkbox />
-                    <Text numberOfLines={2} style={{ fontSize: 16 }}>
-                        {question.description}
-                    </Text>
+                <View
+                    style={{
+                        borderWidth: 2,
+                        borderColor: '#A2A9B8',
+                        paddingHorizontal: 17,
+                        textAlignVertical: 'top',
+                        borderBottomLeftRadius: 20,
+                        borderBottomRightRadius: 20,
+                        marginBottom: 40,
+                        fontSize: 16,
+                    }}
+                >
+                    <Picker>
+                        {TOPICS.map((topic, index) => (
+                            <Picker.Item
+                                key={topic}
+                                label={topic}
+                                value={topic}
+                            />
+                        ))}
+                    </Picker>
                 </View>
-            )}
-            <View style={{ marginVertical: 20, flexDirection: "row", alignItems: "center", gap: 10, }}>
-                <Button content="Select file" onPress={pickFile} style={{ paddingVertical: 10, width: 130 }} />
-                <Text>{audio ? audio.name : "Chọn một file .mp3"}</Text>
-            </View>
-            <Button content="Publish podcast" style={styles.button}
-                ref={ref5} />
-        </ScrollView>
-    </>
+                <Text
+                    style={{ fontWeight: 600, fontSize: 20, marginBottom: 10 }}
+                >
+                    List of questions answered in this episode
+                </Text>
+                {questions === null ? (
+                    <Text>Loading</Text>
+                ) : questions.length == 0 ? (
+                    <Text>No questions</Text>
+                ) : (
+                    questions.map((question) => (
+                        <View
+                            key={question.questionID}
+                            style={{
+                                flexDirection: 'row',
+                                gap: 10,
+                                alignItems: 'center',
+                                marginBottom: 20,
+                            }}
+                        >
+                            <Checkbox />
+                            <Text numberOfLines={2} style={{ fontSize: 16 }}>
+                                {question.description}
+                            </Text>
+                        </View>
+                    ))
+                )}
+                <View
+                    style={{
+                        marginVertical: 20,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 10,
+                    }}
+                >
+                    <Button
+                        content='Select file'
+                        onPress={pickFile}
+                        style={{ paddingVertical: 10, width: 130 }}
+                    />
+                    <Text>{audio ? audio.name : 'Chọn một file .mp3'}</Text>
+                </View>
+                <Button
+                    content='Publish podcast'
+                    style={styles.button}
+                    ref={ref5}
+                />
+            </ScrollView>
+        </>
+    )
 }

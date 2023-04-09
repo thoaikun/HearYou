@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native'
 const maxWidth = Dimensions.get('window').width
-var maxHeight = Dimensions.get('window').height;
+var maxHeight = Dimensions.get('window').height
 
 const styles = StyleSheet.create({
     profileContainer: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         height: 100,
         width: maxWidth,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     btn: {
         width: maxWidth * 0.8,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginHorizontal: maxWidth * 0.1,
         paddingHorizontal: 30,
-        marginTop: 20
+        marginTop: 20,
     },
     pressed: {
         backgroundColor: '#574AA7',
@@ -36,6 +36,22 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 22,
+    },
+    appBar: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        height: 80,
+        marginBottom: 45,
+        paddingBottom: 5,
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        zIndex: 1000,
+    },
+    screenTitle: {
+        fontWeight: 600,
+        fontSize: 25,
     },
 })
 

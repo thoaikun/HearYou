@@ -1,13 +1,12 @@
-import React from "react";
-import { Dimensions, Pressable } from 'react-native'
-import styles from './styles'
-import { Text, View } from "react-native";
-import Bell from '../../../assets/svg/bell_icon.svg'
-import Logout from '../../../assets/svg/logout.svg'
+import { Avatar, IconButton } from '@react-native-material/core'
+import { useNavigation } from '@react-navigation/core'
+import React from 'react'
+import { Dimensions, Pressable, Text, View } from 'react-native'
 import Back from '../../../assets/svg/back_icon_reverse.svg'
-import { Avatar, IconButton } from "@react-native-material/core";
-import { logout } from "../../firebase/auth";
-import { useNavigation } from "@react-navigation/core";
+import BellIcon from '../../../assets/svg/bell_icon.svg'
+import Logout from '../../../assets/svg/logout.svg'
+import { logout } from '../../firebase/auth'
+import styles from './styles'
 
 export default ProfileScreen = () => {
     const maxWidth = Dimensions.get('window').width
@@ -16,20 +15,43 @@ export default ProfileScreen = () => {
 
     return (
         <View style={styles.profileContainer}>
-            <View style={styles.profileTitle}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Profile</Text>
-                <IconButton style={{ position: 'absolute', top: 27, right: 30 }} icon={<Bell height={20} />} />
+            <View style={styles.appBar}>
+                <BellIcon
+                    style={{ position: 'absolute', bottom: 5, right: 25 }}
+                />
+                <Text style={styles.screenTitle}>Home</Text>
             </View>
-            <View style={{ width: maxWidth, paddingHorizontal: 40, height: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ height: 100 }}></View>
+            <View
+                style={{
+                    width: maxWidth,
+                    paddingHorizontal: 40,
+                    height: 100,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}
+            >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Avatar size={80} image={require('../../../assets/thumbnail.png')} />
-                    <Text style={{ marginLeft: 20, fontSize: 20, fontWeight: 'bold' }}>Username</Text>
+                    <Avatar
+                        size={80}
+                        image={require('../../../assets/thumbnail.png')}
+                    />
+                    <Text
+                        style={{
+                            marginLeft: 20,
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Username
+                    </Text>
                 </View>
                 <IconButton icon={<Logout />} onPress={() => logout()} />
             </View>
             <Pressable
                 style={[styles.btn, pressed ? styles.pressed : null]}
-                onPress={() => navigation.navigate("Your list")}
+                onPress={() => navigation.navigate('Your list')}
                 onPressIn={() => setPressed(true)}
                 onPressOut={() => setPressed(false)}
             >
