@@ -1,9 +1,12 @@
-import {
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    signOut,
-} from 'firebase/auth'
+import
+    {
+        createUserWithEmailAndPassword,
+        onAuthStateChanged,
+        signInWithEmailAndPassword,
+        signOut,
+    } from 'firebase/auth'
+import { useContext } from 'react'
+import Context from '../context/Context'
 import { auth } from './config'
 import { getUserData } from './firestore'
 
@@ -32,9 +35,13 @@ export const logout = async () => {
     await signOut(auth)
 }
 
-export const checkAuth = (setLogin) => {
-    onAuthStateChanged(auth, async (user) => {
+export const checkAuth = (setLogin, ctx) => {
+    return onAuthStateChanged(auth, async (user) => {
         if (user) {
+            const res = await getUserData(user.uid)
+            ctx.setName(res.name)
+            ctx.setRole(res.role)
+            ctx.setUid(res.userID)
             setLogin(true)
         } else {
             setLogin(false)

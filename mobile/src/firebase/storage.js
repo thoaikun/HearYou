@@ -40,6 +40,6 @@ export async function uploadThumbnail(podcast, file) {
  * @returns
  */
 export async function getThumbnailUrl(podcast) {
-    const storageRef = ref(storage, `thumbnails/${podcast.podcastID}`);
+    const storageRef = ref(storage, `thumbnails/${podcast.podcastID}.jpg`);
     return await getDownloadURL(storageRef);
 }

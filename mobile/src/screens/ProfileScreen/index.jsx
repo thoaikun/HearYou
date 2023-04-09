@@ -7,10 +7,12 @@ import Logout from '../../../assets/svg/logout.svg'
 import Back from '../../../assets/svg/back_icon_reverse.svg'
 import { Avatar, IconButton } from "@react-native-material/core";
 import { logout } from "../../firebase/auth";
+import { useNavigation } from "@react-navigation/core";
 
 export default ProfileScreen = () => {
     const maxWidth = Dimensions.get('window').width
     const [pressed, setPressed] = React.useState(false)
+    const navigation = useNavigation()
 
     return (
         <View style={styles.profileContainer}>
@@ -27,7 +29,7 @@ export default ProfileScreen = () => {
             </View>
             <Pressable
                 style={[styles.btn, pressed ? styles.pressed : null]}
-                // onPress={() => onPress()}
+                onPress={() => navigation.navigate("Your list")}
                 onPressIn={() => setPressed(true)}
                 onPressOut={() => setPressed(false)}
             >

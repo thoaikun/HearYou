@@ -1,9 +1,9 @@
 // TODO: firestore helper functions
 // @ts-check
 
-import { firestore } from './config'
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
+import { firestore } from './config';
 
 // Users
 
@@ -24,6 +24,12 @@ export const addNewUser = async (payload) => {
 }
 
 // Podcast
+
+export const getPodcastByUser = async (uid) => {
+    const q = query(collection(firestore, "podcasts"), where("ownerID", "==", uid))
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs[0].data();
+}
 
 export const getPodcastData = async (pid) => {
     const docSnap = await getDoc(doc(firestore, "podcasts", pid))
@@ -120,6 +126,33 @@ export const getQuestion = async (qid) => {
         return null
 }
 
+export const getQuestionByUserID = async (uid) => {
+    const q = query(collection(firestore, "questions"), where("userID", "==", uid), limit(10))
+    const querySnapshot = await getDocs(q)
+    const listEpisodes = []
+    querySnapshot.forEach((doc) => {
+        listEpisodes.push(doc.data())
+    })
+    return listEpisodes
+}
+
+export const getQuestionByPodcastID = async (uid) => {
+    const qq =  query(collection(firestore, "podcasts"), where("ownerID", "==", uid))
+    const querySnapshott = await getDocs(qq)
+    const abc = []
+    querySnapshott.forEach((doc) => {
+        abc.push(doc.data())
+    })
+
+    const q = query(collection(firestore, "questions"), where("podcastID", "==", abc[0].podcastID), limit(10))
+    const querySnapshot = await getDocs(q)
+    const listEpisodes = []
+    querySnapshot.forEach((doc) => {
+        listEpisodes.push(doc.data())
+    })
+    return listEpisodes
+}
+
 export const addNewQuestion = async (payload) => {
     const quesID = uuidv4()
     await setDoc(doc(firestore, "questions", quesID), {
@@ -127,4 +160,14 @@ export const addNewQuestion = async (payload) => {
         description: payload.description,
         episodeID: payload.episodeID
     })
+}
+
+export const getUnansweredQuestions = async (pid) => {
+    const q = query(collection(firestore, "questions"), where("episodeID", "==", null), where("podcastID", "==", pid))
+    const querySnapshot = await getDocs(q)
+    const listQuestions = []
+    querySnapshot.forEach((doc) => {
+        listQuestions.push(doc.data())
+    })
+    return listQuestions
 }

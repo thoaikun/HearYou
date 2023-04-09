@@ -1,9 +1,12 @@
 import { Picker } from "@react-native-picker/picker";
-import { useRef, useState } from "react";
+import Checkbox from "expo-checkbox";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import BackIcon from "../../../assets/svg/back_icon.svg";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
+import Context from "../../context/Context";
+import { getPodcastByUser, getUnansweredQuestions } from "../../firebase/firestore";
 import styles from "./styles";
 
 const TOPICS = [
@@ -21,6 +24,18 @@ export default function UploadEpisodeScreen() {
     const ref3 = useRef();
     const ref4 = useRef();
     const ref5 = useRef();
+
+    const { uid } = useContext(Context);
+
+    const [questions, setQuestions] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const podcast = await getPodcastByUser(uid);
+            const questions = await getUnansweredQuestions(podcast.podcastID);
+            setQuestions(questions);
+        })()
+    })
 
     return <>
         <View style={styles.appBar}>
@@ -54,7 +69,22 @@ export default function UploadEpisodeScreen() {
                     {TOPICS.map((topic, index) => <Picker.Item key={topic} label={topic} value={topic} />)}
                 </Picker>
             </View>
-            <Button content="Post question" style={styles.button}
+            <Text style={{ fontWeight: 600, fontSize: 20, marginBottom: 10 }}>
+                List of questions answered in this episode
+            </Text>
+            {questions === null
+                ? <Text>Loading</Text>
+                : questions.length == 0
+                ? <Text>No questions</Text>
+                : questions.map(question =>
+                <View key={question.questionID} style={{ flexDirection: 'row', gap: 10, alignItems: "center", marginBottom: 20, }}>
+                    <Checkbox />
+                    <Text numberOfLines={2} style={{ fontSize: 16 }}>
+                        {question.description}
+                    </Text>
+                </View>
+            )}
+            <Button content="Publish podcast" style={styles.button}
                 ref={ref5} />
         </ScrollView>
     </>

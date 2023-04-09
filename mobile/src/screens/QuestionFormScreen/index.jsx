@@ -3,6 +3,7 @@ import { Pressable, ScrollView, Text, TextInput, View } from 'react-native'
 import BackIcon from '../../../assets/svg/back_icon.svg'
 import Button from '../../components/button/Button'
 import styles from './styles'
+import Input from '../../components/input/Input'
 
 export default function QuestionForm() {
     const navigation = useNavigation()
@@ -18,11 +19,14 @@ export default function QuestionForm() {
                 </Pressable>
                 <Text style={styles.screenTitle}>Ask question</Text>
             </View>
-            <TextInput
+            
+            <Input 
+                placeholder='Podcast name'
+            />
+            <Input
                 placeholder='Ask question'
                 multiline={true}
                 numberOfLines={10}
-                style={styles.input}
             />
             <Button content='Post question' style={styles.button} />
         </ScrollView>

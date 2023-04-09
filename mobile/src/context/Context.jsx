@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Context = React.createContext({})
 
 export const Provider = ({ children }) => {
     const [name, setName] = React.useState('')
     const [role, setRole] = React.useState('')
+    const [uid, setUid] = useState('')
 
     return (
         <Context.Provider
@@ -13,6 +14,8 @@ export const Provider = ({ children }) => {
                 setName,
                 role,
                 setRole,
+                uid,
+                setUid,
             }}
         >
             {children}

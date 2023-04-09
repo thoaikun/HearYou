@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Image, View, Text, Pressable } from 'react-native';
 import styles from './styles';
-import Title from '../../components/title/Title';
+import Title from '../../components/Title/Title';
 import Slider from '@react-native-community/slider';
 import PrevIcon from '../../../assets/svg/skip-to-previous.svg';
 import NextIcon from '../../../assets/svg/skip-to-next.svg';
