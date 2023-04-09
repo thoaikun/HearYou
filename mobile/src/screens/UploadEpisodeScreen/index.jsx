@@ -1,5 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
+import * as DocumentPicker from 'expo-document-picker';
 import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import BackIcon from "../../../assets/svg/back_icon.svg";
@@ -28,6 +29,28 @@ export default function UploadEpisodeScreen() {
     const { uid } = useContext(Context);
 
     const [questions, setQuestions] = useState(null);
+    const [ audio, setAudio ] = useState();
+
+    const pickFile = async () => {
+
+        let result = await DocumentPicker.getDocumentAsync({ type: "audio/mpeg" }).then(response => {
+            console.log(response)
+            if (response.type == 'success') {
+              let { name, size, uri } = response;
+              let nameParts = name.split('.');
+              let fileType = nameParts[nameParts.length - 1];
+              var fileToUpload = {
+                name: name,
+                size: size,
+                uri: uri,
+                type: "application/" + fileType
+              };
+              console.log(fileToUpload, '...............file')
+              setAudio(fileToUpload);
+            }
+          });
+        // console.log(result);
+    }
 
     useEffect(() => {
         (async () => {
@@ -84,6 +107,10 @@ export default function UploadEpisodeScreen() {
                     </Text>
                 </View>
             )}
+            <View style={{ marginVertical: 20, flexDirection: "row", alignItems: "center", gap: 10, }}>
+                <Button content="Select file" onPress={pickFile} style={{ paddingVertical: 10, width: 130 }} />
+                <Text>{audio ? audio.name : "Chọn một file .mp3"}</Text>
+            </View>
             <Button content="Publish podcast" style={styles.button}
                 ref={ref5} />
         </ScrollView>
