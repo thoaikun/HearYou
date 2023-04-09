@@ -9,11 +9,12 @@ import BackIcon from '../../../assets/svg/back_icon.svg'
 import Button from '../../components/button/Button'
 import Input from '../../components/input/Input'
 import Context from '../../context/Context'
-import {
-    addNewEpisode,
-    getPodcastByUser,
-    getUnansweredQuestions,
-} from '../../firebase/firestore'
+import
+    {
+        addNewEpisode,
+        getPodcastByUser,
+        getUnansweredQuestions,
+    } from '../../firebase/firestore'
 import { uploadEpisode } from '../../firebase/storage'
 import styles from './styles'
 
@@ -40,6 +41,7 @@ export default function UploadEpisodeScreen() {
     const [audio, setAudio] = useState()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [selecteds, setSelecteds] = useState(new Set());
 
     const pickFile = async () => {
         let result = await DocumentPicker.getDocumentAsync({
@@ -81,12 +83,12 @@ export default function UploadEpisodeScreen() {
     }
 
     useEffect(() => {
-        ;(async () => {
+        (async () => {
             const podcast = await getPodcastByUser(uid)
             const questions = await getUnansweredQuestions(podcast.podcastID)
             setQuestions(questions)
         })()
-    })
+    }, [])
 
     return (
         <>
@@ -166,7 +168,13 @@ export default function UploadEpisodeScreen() {
                                 marginBottom: 20,
                             }}
                         >
-                            <Checkbox />
+                            <Checkbox value={selecteds.has(question)} onValueChange={(b) => {
+                                if (b) {
+                                    setSelecteds(new Set([...selecteds, question]))
+                                } else {
+                                    setSelecteds(new Set([...selecteds].filter((q) => q.questionID !== question.questionID)))
+                                }
+                            }} />
                             <Text numberOfLines={2} style={{ fontSize: 16 }}>
                                 {question.description}
                             </Text>
